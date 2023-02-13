@@ -1,2 +1,2 @@
 #!/bin/bash
-cat | sort | uniq -u | pr | lpr
+cat <file_name>  | sort | uniq -u | pr | lpr
