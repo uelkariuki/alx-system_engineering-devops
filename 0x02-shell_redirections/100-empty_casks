@@ -1,2 +1,2 @@
 #!/bin/bash
-find . \( -type f -empty -or -type d -empty \) -exec echo $(basename {}) \;
+find . -empty | ` cut -d '/' -f 1 
