@@ -1,2 +1,2 @@
 #!/bin/bash
-cat | sort | uniq | pr | lpr
+cat | sort | uniq -u | pr | lpr
