@@ -1,2 +1,2 @@
 #!/bin/bash
-echo n $((BINARY))
+echo $((2#$BINARY))
