@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
 # Bash script that displays a list of currently running processes
 
-ps -u
+#ps -axfj
+ps -U root -u root u
