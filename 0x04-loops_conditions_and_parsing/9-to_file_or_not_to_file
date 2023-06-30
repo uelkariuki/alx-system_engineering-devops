@@ -17,7 +17,7 @@ then
 	then
 		echo "school is a regular file"
 	else
-		echo ""
+		:
 	fi
 
 else
