@@ -9,4 +9,5 @@
 #+ You must use awk
 #+ You are not allowed to use while, for, until and cut
 
-awk '{ count[$1, $9]++ } END {for (key in count) printf "    %4d %-15s\n", count[key], key}' OFS=" " ./apache-access.log | sort -rn
+log_file_path="./apache-access.log"
+awk '{print $1" "$9}' $log_file_path | sort | uniq -c | awk  '{print $1" "$2" "$3}' | sort -rn
