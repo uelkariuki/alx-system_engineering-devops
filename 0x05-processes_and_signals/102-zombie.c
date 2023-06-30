@@ -23,21 +23,14 @@ int main(void)
 		{
 			exit(0);
 		}
-		else if (child_pid > 0)
-		{
-			printf("Zombie process present, PID: %d\n", child_pid);
-			wait(NULL);
-
-		}
 		else
 		{
-			perror("Try again, error occured");
+			printf("Zombie process present, PID: %d\n", child_pid);
 
 		}
 
-
-
 	}
+	infinite_while();
 
 	return (0);
 }
