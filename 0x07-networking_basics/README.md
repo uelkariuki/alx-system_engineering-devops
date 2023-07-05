@@ -1,7 +1,7 @@
 # 0x07. Networking basics #0
 ## Tasks
-0. OSI model 
-- Questions:
+0. **OSI model**
+- **Questions:**
 - What is the OSI model?
 
 	- 1. Set of specifications that network hardware manufacturers must respect
