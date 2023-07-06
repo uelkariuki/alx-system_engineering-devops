@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+#  Bash script that displays all active IPv4 IPs on the machine it’s executed on.
+active_ip_addr=$(ifconfig | awk '/inet /{print $2}')
+if [[ -n $active_ip_addr ]]
+then	
+	for ipv4 in $active_ip_addr
+	do
+		echo "$ipv4"
+	done
+fi
