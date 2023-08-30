@@ -3,13 +3,14 @@
 
 sudo apt update
 sudo apt install nginx -y
-touch /etc/nginx/html/index.html
-echo "Hello World!" >  /etc/nginx/html/index.html
-touch /etc/nginx/html/404.html
-echo -e "Ceci n'est pas une page\n\n" > /etc/nginx/html/404.html
+# touch /etc/nginx/html/index.html
+# echo "Hello World!" >  /etc/nginx/html/index.html
+# touch /etc/nginx/html/404.html
+echo -e "Ceci n'est pas une page\n" | sudo tee /etc/nginx/html/404.html
+sudo tee /etc/nginx/sites-available/default > /dev/null <<EOT
 
 #Configure Nginx to use the custom 404 page
-printf %s "server {
+server {
     listen 80 default_server;
     listen [::]:80 default_server;
 
@@ -29,6 +30,7 @@ printf %s "server {
     }
 
 
-}" > /etc/nginx/sites-available/default
+}
+EOT
 
 sudo service nginx restart
