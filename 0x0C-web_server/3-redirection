@@ -4,7 +4,7 @@
 
 sudo apt update
 sudo apt install -y nginx
-sudo bash -c "echo 'Hello World!' > /etc/nginx/html/index.html"
+sudo bash -c "echo 'Hello World!' > /var/www/html/index.html"
 sudo service nginx start
 sudo bash -c "cat <<EOL > /etc/nginx/sites-available/default
 server {
