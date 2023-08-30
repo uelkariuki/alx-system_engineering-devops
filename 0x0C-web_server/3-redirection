@@ -3,8 +3,8 @@
 # The redirection must be a “301 Moved Permanently”
 
 sudo apt update
-sudo apt install nginx -y
-sudo bash -c "echo 'Hello World!' > /var/www/html/index.html"
+sudo apt install -y nginx
+sudo bash -c "echo 'Hello World!' > /etc/nginx/html/index.html"
 sudo service nginx start
 sudo bash -c "cat <<EOL > /etc/nginx/sites-available/default
 server {
@@ -15,7 +15,7 @@ server {
     location /redirect_me {
          return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
     }
-    
+
     root /var/www/html;
     index index.html;
 }
