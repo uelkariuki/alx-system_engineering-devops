@@ -12,7 +12,7 @@ package { 'nginx':
 
 file { '/var/www/html/index.html':
   ensure  => file,
-  content => 'Hello World',
+  content => 'Hello World!',
   require => Package['nginx'],
 }
 
@@ -23,7 +23,7 @@ file { '/etc/nginx/sites-available/default':
   content => @("END"),
 }
 
-server {
+ server {
     listen 80;
     listen [::]:80 default_server;
     root /etc/nginx/html;
@@ -39,8 +39,7 @@ server {
     }
 
 }
-| END
-    notify  => Package['nginx']
+END
 }
 # starting and enabling the Nginx service
 service { 'nginx':
@@ -49,4 +48,5 @@ service { 'nginx':
   hasrestart => true,
   hasstatus  => true,
   require    => Package['nginx'],
+  notify     => File['/etc/nginx/sites-available/default'],
 }
