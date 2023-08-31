@@ -10,25 +10,38 @@ package { 'nginx':
 
 # Defining the Nginx server configuration using a here document
 
-file { '/etc/nginx/sites-available/default':
+file { '/var/www/html/index.html':
   ensure  => file,
-  content => @("END")
+  content => 'Hello World',
+  require => Package['nginx'],
+}
 
 # Nginx server configuration
+
+file { '/etc/nginx/sites-available/default':
+  ensure  => file,
+  content => @("END"),
+}
+
 server {
-  listen 80;
-  server_name localhost;
+    listen 80;
+    listen [::]:80 default_server;
+    root /etc/nginx/html;
+    index index.html;
 
-  location / {
-    return 200 'Hello World!';
-  }
-  location /redirect_me {
-    return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-  }
-}
-END
-}
+    location /redirect_me {
+         return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    }
+    error_page 404 /404.html;
+    location /404 {
+        root /etc/nginx/html;
+        internal;
+    }
 
+}
+| END
+    notify  => Package['nginx']
+}
 # starting and enabling the Nginx service
 service { 'nginx':
   ensure     => running,
@@ -36,5 +49,4 @@ service { 'nginx':
   hasrestart => true,
   hasstatus  => true,
   require    => Package['nginx'],
-  notify     => File['/etc/nginx/sites-available/default'],
 }
