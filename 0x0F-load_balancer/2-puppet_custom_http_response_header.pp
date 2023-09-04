@@ -8,8 +8,8 @@ exec { 'command':
 # -i option is to add in place to make changes to the input file directly instead of printing result to stdout
 # /a option is to append line that adds a custom HTTP header after the line listen 80 default_server
 # /listen .. the / helps know which pattern or line that is being looked for
-  sudo sed -i  "/listen 80 default_server; /a add_header X-Served-By $HOSTNAME;" /etc/nginx/sites-available/default;
-  service nginx restart',
+  sudo sed -i  "/listen 80 default_server; /a add_header X-Served-By $hostname;" /etc/nginx/sites-available/default;
+  sudo service nginx restart',
   provider => shell,
 
 }
