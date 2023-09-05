@@ -20,7 +20,7 @@ file { '/var/www/html/index.html':
 }
 
 # add X-Served-By custom header
-file_line { 'add header':
+file_line { 'add custom header':
   ensure => present,
   path =>  '/etc/nginx/sites-available/default',
   line => "    add_header X-Served-By ${hostname};",
@@ -28,5 +28,4 @@ file_line { 'add header':
 }
 service { 'nginx':
   ensure => running,
-  enable => true,
 }
