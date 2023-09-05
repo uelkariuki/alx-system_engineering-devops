@@ -5,10 +5,11 @@
 # -i option is to add in place to make changes to the input file directly instead of printing result to stdout
 # /a option is to append line that adds a custom HTTP header after the line listen 80 default_server
 # /listen .. the / helps know which pattern or line that is being looked for
-exec { 'command':
-  command  => 'apt -y update; apt -y install nginx;
-  sudo sed -i  "/listen 80 default_server; /a add_header X-Served-By $hostname;" /etc/nginx/sites-available/default;
-  service nginx restart',
-  provider => shell,
 
+exec { 'add_header':
+  command => 'echo "    add_header X-Served-By $(hostname);" | sudo tee /tmp/add_header.txt > /dev/null;
+        sudo sed -i "/listen 80 default_server/r /tmp/add_header.txt" /etc/nginx/sites-available/default;
+        sudo rm /tmp/add_header.txt;
+        sudo service nginx restart',
+  provider => shell,
 }
