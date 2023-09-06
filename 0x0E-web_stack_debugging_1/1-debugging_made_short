@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # Write a Bash script Using what you did for task #0, make your fix short and sweet
 ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
-sudo service nginx restart
+sudo service nginx start
 pkill nginx
