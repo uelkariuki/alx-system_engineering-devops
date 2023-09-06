@@ -7,7 +7,5 @@ NGINX_CONFIG="/etc/nginx/sites-enabled/default"
 
 # substitute all occurences of listen 8080 default_server to listen 80 default_server
 sudo sed -i 's/listen 8080 default_server/listen 80 default_server/g' $NGINX_CONFIG
-sudo sed -i 's/listen \[::\]:8080 default_server ipv6only=on/listen [::]:80 default_server ipv6only=on/g' $NGINX_CONFIG
-
 sudo service nginx reload
 sudo service nginx start
