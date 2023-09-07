@@ -36,15 +36,23 @@ defaults
 frontend http_front
     bind *:80
     mode http
+    #  redirect scheme https code 301 if !{ ssl_fc }
     default_backend http_back
-
-backend http_back
-    mode http
-    balance roundrobin
-    server 259096-web-01 34.202.164.69
-    server 259096-web-02 100.25.41.114
 
 frontend www-https
     bind *:443 ssl crt /etc/letsencrypt/live/www.uelkariuki.tech/fullchain.pem
-    mode http
+
+    # let the letsencrypt backend handle requests to the acme-challenge url
+    acl    letsencrypt-acl path_beg /.well-known/acme-challenge/
+    use_backend letsencrypt-backend if letsencrypt-acl
     default_backend http_back
+
+backend http_back
+    # mode http
+    balance roundrobin
+    redirect scheme https code 301 if !{ ssl_fc }
+    server 259096-web-01 34.202.164.69:80 check
+    server 259096-web-02 100.25.41.114:80 check
+
+backend letsencrypt-backend
+    server letsencrypt 127.0.0.1
