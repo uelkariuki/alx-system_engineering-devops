@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# write a Bash script that will display information about subdomains.
+
+display_info_function()
+{
+    local domain=$1
+    local subdomain=$2
+
+    subdomain="${subdomain%%.*}"
+    # query dns records of subdomain for using dig
+    dig_result=$(dig +short "$subdomain.$domain" A)
+
+    # using awk to extract the record type and destination from dig result
+    read -r record_type destination < <(echo "$dig_result" | awk 'NR==1 {print "A", $1}')
+
+    echo "The subdomain $subdomain is a $record_type record and points to $destination"
+
+}
+
+# When passing domain and subdomain parameters, display information for the specified subdomain
+if [[ -n $2 ]]; then
+  display_info_function "$1" "$2"
+else
+  for subdomain in www lb-01 web-01 web-02; do
+    display_info_function "$1" "$subdomain.$1"
+  done
+fi
