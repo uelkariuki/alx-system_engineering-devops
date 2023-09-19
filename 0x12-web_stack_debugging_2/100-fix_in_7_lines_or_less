@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Bash script for task #1, making the fix short and sweet in 7 lines or less
 
+service nginx start
 sed -i.bak 's/#user www-data;/user nginx;/g' /etc/nginx/nginx.conf
 service nginx restart
