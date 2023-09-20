@@ -5,4 +5,4 @@
 mysqldump -uroot -p"$1" --all-databases > backup.sql
 
 # Compress the dump file to a tar.gz archive
-tar -czvf "$(date +%d-%m-%Y)".tar.gz backup.sql
+tar -cvzf "$(date +%d-%m-%Y)".tar.gz backup.sql
