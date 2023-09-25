@@ -1,11 +1,10 @@
 #!/usr/bin/python3
 
 """
-Python script that, using this REST API, exports data in the CSV format
-
+Python script that, using this REST API, exports data in the JSON format
 """
 
-import csv
+import json
 import requests
 import sys
 """ Importing the required modules"""
@@ -21,12 +20,16 @@ def get_employee_info(api_endpoint, employee_id):
         user_data = user_response.json()
         to_do_data = to_do_response.json()
 
-        filename = f'{user_data["id"]}.csv'
-        with open(filename, "w", newline='') as csvfile:
-            writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
-            for task in to_do_data:
-                writer.writerow([task['userId'], user_data['username'],
-                                task['completed'], task['title']])
+        filename = f'{user_data["id"]}.json'
+        tasks = []
+        for task in to_do_data:
+            tasks.append({
+                "task": task['title'],
+                "completed": task['completed'],
+                "username": user_data['username']
+                })
+        with open(filename, "w") as file:
+            json.dump({employee_id: tasks}, file)
 
 
 def main():
