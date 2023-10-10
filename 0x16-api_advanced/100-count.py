@@ -19,7 +19,6 @@ def count_words(subreddit, word_list, after=None, counter=None):
     """
     if counter is None:
         counter = Counter()
-
     headers = {'User-agent': '100-count/1.0 (fipis92205@dixiser.com)'}
     url = f'https://www.reddit.com/r/{subreddit}/hot.json'
     params = {"limit": 100}
@@ -43,6 +42,7 @@ def count_words(subreddit, word_list, after=None, counter=None):
     else:
         count_sorted = sorted([(key, value) for key, value in
                               counter.items() if value > 0],
-                              key=lambda x: (-x[1], x[0]))
+                              key=lambda x: (-x[1], x[0].lower()))
+        count_sorted = sorted(count_sorted)
         for word, count in count_sorted:
             print(f"{word}: {count}")
