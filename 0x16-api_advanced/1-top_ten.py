@@ -21,4 +21,4 @@ hot.json?limit=10', headers=headers)
         for title in titles:
             print(title)
     else:
-        return None
+        print("None")
