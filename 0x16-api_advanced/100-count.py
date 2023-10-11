@@ -24,7 +24,7 @@ def count_words(subreddit, word_list, instances={}, after=None, count=0):
 
     try:
         results = response.json()
-        if response.status_code == 404:
+        if response.status_code == 404 or results is None:
             raise Exception
     except Exception:
         print("")
