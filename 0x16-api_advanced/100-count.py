@@ -32,9 +32,8 @@ def count_words(subreddit, word_list, instances={}, after=None, count=0):
     results = results.get("data")
     after = results.get("after")
     count += results.get("dist")
-    children = results.get("children")
 
-    for children_result in children:
+    for children_result in results.get("children"):
         title = children_result.get("data").get("title").lower().split()
         for word in word_list:
             if word.lower() in title:
@@ -46,11 +45,9 @@ def count_words(subreddit, word_list, instances={}, after=None, count=0):
             print("")
         else:
             sort_instances = sorted(
-                                    instances.items(), key=lambda
-                                    key_value: (-key_value[1],
-                                                key_value[0])
-                                    )
-            for key, value in sort_instances:
-                print(f"{key}: {value}")
+                    instances.items(),
+                    key=lambda key_value: (-key_value[1], key_value[0])
+                    )
+            [print(f"{key}: {value}") for key, value in sort_instances]
     else:
         count_words(subreddit, word_list, instances, after, count)
