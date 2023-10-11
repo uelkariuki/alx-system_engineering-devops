@@ -25,24 +25,23 @@ def count_words(subreddit, word_list, after=None, counter=None):
     if after:
         params["after"] = after
 
-    response = requests.get(url, headers=headers, params=params)
-    all_data = response.json()
-    if (response.status_code == 200 and "data" in all_data
-            and "children" in all_data["data"]):
-        for post in all_data["data"]["children"]:
-            title = post["data"]["title"].lower()
-            for word in word_list:
-                counter[word] += len(re.findall(rf"\b{word}\b", title))
-    else:
+    response = requests.get(url, headers=headers, params=params,
+                            allow_redirects=False)
+    data = response.json()
+    if (response.status_code != 200 or "data" not in data
+            or "children" not in data["data"]):
         return
+    for post in data["data"]["children"]:
+        title = post["data"]["title"].lower()
+        for word in word_list:
+            counter[word] += len(re.findall(rf"\b{word}\b", title))
 
-    if "after" in all_data["data"] and all_data["data"]["after"]:
+    if "after" in data["data"] and data["data"]["after"]:
         count_words(subreddit, word_list,
-                    after=all_data["data"]["after"], counter=counter)
+                    after=data["data"]["after"], counter=counter)
     else:
         count_sorted = sorted([(key, value) for key, value in
                               counter.items() if value > 0],
-                              key=lambda x: (-x[1], x[0].lower()))
-        count_sorted = sorted(count_sorted)
+                              key=lambda x: (-x[1], x[0]))
         for word, count in count_sorted:
             print(f"{word}: {count}")
