@@ -17,7 +17,7 @@ def count_words(subreddit, word_list, instances={}, after=None, count=0):
     """
     url = f'https://www.reddit.com/r/{subreddit}/hot/.json'
     headers = {'User-agent': '100-count/1.0 (fipis92205@dixiser.com)'}
-    params = {"after": after, "count": count, "limit": 100}
+    params = {"after": after, "count": count, "limit": 500}
 
     response = requests.get(url, headers=headers, params=params,
                             allow_redirects=False)
