@@ -23,23 +23,22 @@ def count_words(subreddit, word_list, instances={}, after=None, count=0):
                             allow_redirects=False)
 
     try:
-        all_data = response.json()
+        results = response.json()
         if response.status_code == 404:
             raise Exception
     except Exception:
         print("")
         return
-    Data = all_data.get("data")
-    after = Data.get("after")
-    count += Data.get("dist")
-    children = Data.get("children")
+    results = results.get("data")
+    after = results.get("after")
+    count += results.get("dist")
+    children = results.get("children")
 
     for children_result in children:
         title = children_result.get("data").get("title").lower().split()
         for word in word_list:
-            word = word.lower()
-            no_times = title.count(word)
-            if no_times > 0:
+            if word.lower() in title:
+                no_times = title.count(word.lower())
                 instances[word] = instances.get(word, 0) + no_times
 
     if after is None:
@@ -48,7 +47,7 @@ def count_words(subreddit, word_list, instances={}, after=None, count=0):
         else:
             sort_instances = sorted(
                                     instances.items(), key=lambda
-                                    key_value: (key_value[1],
+                                    key_value: (-key_value[1],
                                                 key_value[0])
                                     )
             for key, value in sort_instances:
