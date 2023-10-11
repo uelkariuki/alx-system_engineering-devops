@@ -35,7 +35,7 @@ def count_words(subreddit, word_list, after=None, counter=None):
             for word in word_list:
                 counter[word] += len(re.findall(rf"\b{word}\b", title))
     else:
-        print("")
+        return
 
     if "after" in all_data["data"] and all_data["data"]["after"]:
         count_words(subreddit, word_list,
