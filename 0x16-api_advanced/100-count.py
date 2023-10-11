@@ -31,11 +31,11 @@ def count_words(subreddit, word_list, after=None, counter=None):
     if (response.status_code == 200 and "data" in all_data
             and "children" in all_data["data"]):
         for post in all_data["data"]["children"]:
-            title = post["data"]["title"]
+            title = post["data"]["title"].lower()
             for word in word_list:
                 counter[word] += len(re.findall(rf"\b{word}\b", title))
     else:
-        return
+        print("")
 
     if "after" in all_data["data"] and all_data["data"]["after"]:
         count_words(subreddit, word_list,
