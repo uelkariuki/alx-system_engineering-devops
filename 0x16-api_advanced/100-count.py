@@ -30,7 +30,7 @@ def count_words(subreddit, word_list, after=None, counter=None):
     data = response.json()
     if (response.status_code != 200 or "data" not in data
             or "children" not in data["data"]):
-        return
+        print("")
     for post in data["data"]["children"]:
         title = post["data"]["title"].lower()
         for word in word_list:
