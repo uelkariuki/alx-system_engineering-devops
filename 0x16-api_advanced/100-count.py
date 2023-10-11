@@ -9,7 +9,7 @@ javascript, but java should not).
 import requests
 
 
-def count_words(subreddit, word_list, after="", counter=0, instances={}):
+def count_words(subreddit, word_list, instances={}, after=None, count=0):
     """
     Queries the Reddit API, parses the title of all hot articles,
     and prints a sorted count of given keywords (case-insensitive,
@@ -17,7 +17,7 @@ def count_words(subreddit, word_list, after="", counter=0, instances={}):
     """
     url = f'https://www.reddit.com/r/{subreddit}/hot/.json'
     headers = {'User-agent': '100-count/1.0 (fipis92205@dixiser.com)'}
-    params = {"after": after, "counter": counter, "limit": 100}
+    params = {"after": after, "count": count, "limit": 100}
 
     response = requests.get(url, headers=headers, params=params,
                             allow_redirects=False)
@@ -29,12 +29,10 @@ def count_words(subreddit, word_list, after="", counter=0, instances={}):
     except Exception:
         print("")
         return
-    all_data = response.json()
-
-    data = all_data.get("data")
-    counter += data.get("dist")
-    children = data.get("children")
-    after = data.get("after")
+    Data = all_data.get("data")
+    after = Data.get("after")
+    count += Data.get("dist")
+    children = Data.get("children")
 
     for children_result in children:
         title = children_result.get("data").get("title").lower().split()
@@ -56,4 +54,4 @@ def count_words(subreddit, word_list, after="", counter=0, instances={}):
             for key, value in sort_instances:
                 print(f"{key}: {value}")
     else:
-        count_words(subreddit, word_list, after, counter, instances)
+        count_words(subreddit, word_list, instances, after, count)
