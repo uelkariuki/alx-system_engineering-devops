@@ -1,8 +1,4 @@
 #!/usr/bin/env bash
 # A simple Bash script to reload Gunicorn in a graceful way
 
-ProcessIDs=$(pgrep -f "gunicorn")
-
-for ProcessID in $ProcessIDs; do
-	kill -HUP "$ProcessID"
-done
+ps aux | grep gunicorn | awk '{ print $2 }'| xargs kill -HUP
