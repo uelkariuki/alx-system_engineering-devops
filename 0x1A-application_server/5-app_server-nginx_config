@@ -1,10 +1,10 @@
 # To ensure Nginx proxy requests to the process listening on port 5000
 server {
     listen 80 default_server;
+    add_header X-Served-By 259096-web-01;
     server_name 34.202.164.69;
 
     location / {
-        include proxy_params;
         proxy_pass http://localhost:5003/2-hbnb;
     }
 
@@ -18,12 +18,10 @@ server {
         proxy_pass http://localhost:5001/airbnb-dynamic/number_odd_or_even/$1;
     }
     location /api/ {
-        include proxy_params;
         proxy_pass http://localhost:5002/api/;
     }
-    location /static/ {
-        include proxy_params;
-        proxy_pass http://localhost:5003;
+    location /static {
+       alias /home/ubuntu/AirBnB_clone_v4/web_dynamic/static/;
     }
 
 }
