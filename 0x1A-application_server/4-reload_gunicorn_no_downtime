@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
 # A simple Bash script to reload Gunicorn in a graceful way
 
-ps aux | grep gunicorn | awk '{ print $2 }'| xargs kill -HUP
+pids=$(pgrep gunicorn)
+
+if [ -n "$pids" ]; then
+	echo "$pids" | xargs kill -HUP
+else
+	echo "Nothing found"
+fi
