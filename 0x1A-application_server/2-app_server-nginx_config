@@ -1,11 +1,11 @@
 # To ensure Nginx proxy requests to the process listening on port 5000
 server {
-    listen 80;
+    listen 80 default_server;
     server_name 34.202.164.69;
 
-    location / {
+    location = /airbnb-onepage/ {
         include proxy_params;
-        proxy_pass http://localhost:5000;
+        proxy_pass http://localhost:5000/airbnb-onepage/;
     }
 
 }
