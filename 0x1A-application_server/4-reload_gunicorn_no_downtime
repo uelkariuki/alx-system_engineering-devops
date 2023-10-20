@@ -2,4 +2,4 @@
 # A simple Bash script to reload Gunicorn in a graceful way
 #shellcheck disable=SC2009
 
-pkill -HUP gunicorn
+ps aux | grep gunicorn | awk '{ print $2 }' | xargs kill -HUP
